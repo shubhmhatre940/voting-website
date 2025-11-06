@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Bharat e-Voting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            background:#F4F6F8;
+            font-family:'Poppins',sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+        .card{
+            width:420px;
+            background:#fff;
+            padding:38px;
+            border-radius:12px;
+            box-shadow:0 8px 24px rgba(0,0,0,0.08);
+            text-align:center;
+        }
+        h2{
+            margin:0;
+            color:#0D2E5E;
+            font-size:26px;
+            font-weight:600;
+        }
+        .subtitle{
+            margin-top:6px;
+            font-size:14px;
+            color:#6c7b8b;
+            margin-bottom:28px;
+        }
+        label{
+            display:block;
+            text-align:left;
+            font-size:14px;
+            font-weight:500;
+            margin-top:16px;
+            color:#0D2E5E;
+        }
+        input{
+            width:100%;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #d9d9d9;
+            margin-top:6px;
+            font-size:14px;
+        }
+        button{
+            margin-top:28px;
+            width:100%;
+            padding:12px;
+            background:#2D73FF;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
+        }
+        button:hover{ background:#1c5fe8; }
+
+        .footer-text{
+            margin-top:22px;
+            font-size:13px;
+            color:#444;
+        }
+        .footer-text a{
+            color:#0077ff;
+            text-decoration:none;
+            font-weight:500;
+        }
+        .footer-text a:hover{
+            text-decoration:underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Admin Login</h2>
+    <p class="subtitle">Secure access to election management system</p>
+
+    <form id="adminLogin">
+
+        <label>Admin Email or Phone</label>
+        <input id="user" placeholder="Enter admin email or phone" required>
+
+        <label>Admin Password</label>
+        <input id="pass" type="password" placeholder="Enter admin password" required>
+
+        <button type="submit">Admin Sign In</button>
+    </form>
+
+    <p class="footer-text">Not an admin? <a href="login.html">Voter login</a></p>
+
+</div>
+
+<script>
+    document.getElementById('adminLogin').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('user').value;
+      const p = document.getElementById('pass').value;
+
+      // Demo admin credentials
+     if(u === 'admin' && p === 'admin123'){
+  localStorage.setItem("admin", "true"); // ✅ store login session
+  window.location = "/admin.html";
+}
+
+      else{
+        alert('❌ Invalid admin credentials');
+      }
+    });
+</script>
+
+</body>
+</html>

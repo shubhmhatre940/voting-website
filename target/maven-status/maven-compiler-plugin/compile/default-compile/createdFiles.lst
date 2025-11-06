@@ -1,0 +1,8 @@
+com\example\voting\controller\AdminController.class
+com\example\voting\model\Voter.class
+com\example\voting\controller\AuthController.class
+com\example\voting\model\Candidate.class
+com\example\voting\repo\VoterRepository.class
+com\example\voting\repo\CandidateRepository.class
+com\example\voting\Application.class
+com\example\voting\controller\VoteController.class

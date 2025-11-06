@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vote - Bharat e-Voting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body{font-family:'Poppins',sans-serif;margin:0;background:#F5F8FC;}
+        header{background:#fff;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;
+          box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+        .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:#0D2E5E;font-size:20px;}
+        #logout{color:#F98D2E;font-weight:600;text-decoration:none;cursor:pointer;}
+        #logout:hover{text-decoration:underline;}
+
+        h1{text-align:center;margin-top:48px;color:#0D2E5E;font-size:36px;font-weight:700;}
+        p.subtitle{text-align:center;margin-top:6px;color:#6c7b8b;}
+
+        .grid{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:48px;padding:0 40px;}
+        .card{background:#fff;width:260px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.08);
+          text-align:center;padding:28px 20px;}
+        .card h3{margin:6px 0;font-size:20px;color:#0D2E5E;font-weight:600;}
+        .card span{display:block;color:#6c7b8b;font-size:14px;margin-bottom:18px;}
+
+        .vote-btn{width:100%;padding:12px;border:none;background:#16A34A;color:#fff;
+          font-weight:600;border-radius:8px;cursor:pointer;font-size:15px;}
+        .vote-btn:hover{background:#138a3f;}
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <img src="https://img.icons8.com/color/48/india.png" width="32"/> Bharat e-Voting
+    </div>
+    <a id="logout">Logout</a>
+</header>
+
+<h1>General Election 2025</h1>
+<p class="subtitle">Please review the candidates below and cast your vote.</p>
+
+<div class="grid" id="candidateGrid"></div>
+
+<script>
+    if(!localStorage.getItem('voterId')){
+      Swal.fire("Login Required", "Please login to vote.", "warning").then(()=> {
+        window.location = "login.html";
+      });
+    }
+
+    async function loadCandidates(){
+      const res = await fetch('/api/admin/candidates');
+      const list = await res.json();
+      const grid = document.getElementById('candidateGrid');
+      grid.innerHTML = '';
+
+      list.forEach(c => {
+        grid.innerHTML += `
+          <div class="card">
+            <h3>${c.name}</h3>
+            <span>${c.party}</span>
+            <button class="vote-btn" onclick="vote(${c.id})">Vote</button>
+          </div>
+        `;
+      });
+    }
+
+    async function vote(candidateId){
+      const voterId = localStorage.getItem('voterId');
+      const list = await (await fetch('/api/admin/candidates')).json();
+      const selected = list.find(c => c.id === candidateId);
+
+      Swal.fire({
+        title: `Vote for ${selected.name}?`,
+        text: "You cannot change your vote once submitted.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#16A34A",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit Vote"
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await fetch('/api/vote/cast', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ voterId, candidateId })
+          });
+
+          const data = await res.json();
+
+          if(res.ok){
+            Swal.fire("Vote Submitted!", "Your vote has been recorded.", "success")
+              .then(()=> window.location = "results.html");
+          } else {
+            Swal.fire("Error", data.error || "Vote failed", "error");
+          }
+        }
+      });
+    }
+
+    document.getElementById('logout').addEventListener('click', ()=>{
+      localStorage.removeItem('voterId');
+      Swal.fire("Logged Out", "You have been logged out successfully.", "info")
+        .then(()=> window.location = "login.html");
+    });
+
+    loadCandidates();
+</script>
+
+</body>
+</html>

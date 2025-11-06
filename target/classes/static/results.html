@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Election Results - Bharat e-Voting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body{
+            margin:0;
+            font-family:'Poppins',sans-serif;
+            background:#F4F6F8;
+            display:flex;
+            justify-content:center;
+            padding:40px 20px;
+        }
+        .card{
+            background:#fff;
+            width:700px;
+            border-radius:12px;
+            padding:30px;
+            box-shadow:0 8px 24px rgba(0,0,0,0.08);
+        }
+        h2{ text-align:center; color:#0D2E5E; margin-bottom:4px; font-size:28px; }
+        .subtitle{ text-align:center; font-size:14px; color:#6c7b8b; margin-bottom:24px; }
+
+        .result-item{
+            background:#f9fafb;
+            padding:12px 14px;
+            border-radius:8px;
+            margin-top:8px;
+            border:1px solid #e5e7eb;
+            display:flex;
+            justify-content:space-between;
+            font-size:14px;
+        }
+
+        canvas{ margin-top:34px; }
+    </style>
+
+</head>
+<body>
+
+<div class="card">
+    <h2>Election Results</h2>
+    <p class="subtitle">Live vote counting status</p>
+
+    <div id="results"></div>
+
+    <!-- Chart -->
+    <canvas id="resultsChart"></canvas>
+</div>
+
+
+<script>
+    async function loadResults(){
+        const res = await fetch('/api/admin/results');
+        const list = await res.json();
+
+        // Display list data
+        const cont = document.getElementById('results');
+        cont.innerHTML = '';
+
+        list.forEach(c => {
+            cont.innerHTML += `
+              <div class="result-item">
+                <span><strong>${c.name}</strong> (${c.party})</span>
+                <span>${c.votes} votes</span>
+              </div>
+            `;
+        });
+
+        // Prepare data for chart
+        const names = list.map(c => c.name);
+        const votes = list.map(c => c.votes);
+
+        // Draw chart
+        new Chart(document.getElementById('resultsChart'), {
+          type: 'bar',
+          data: {
+            labels: names,
+            datasets: [{
+              label: 'Votes Received',
+              data: votes,
+              backgroundColor: '#0D6EFD'
+            }]
+          },
+          options: {
+            responsive:true,
+            scales:{
+              y:{ beginAtZero:true }
+            }
+          }
+        });
+    }
+
+    loadResults();
+</script>
+
+</body>
+</html>

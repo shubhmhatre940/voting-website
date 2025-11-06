@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bharat e-Voting - Digital Democracy Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background:#F4F6F8; margin:0; }
+        header { background:#fff; padding:18px 60px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+        header .logo-area { display:flex; align-items:center; gap:10px; font-size:20px; font-weight:700; color:#0D2E5E; }
+        nav a { margin-left:25px; text-decoration:none; font-size:16px; color:#333; }
+        nav a:hover, nav a.active { color:#F98D2E; font-weight:600; }
+
+        .hero { text-align:center; padding:120px 20px; }
+        .hero h1 { font-size:46px; font-weight:700; margin-bottom:16px; color:#111; }
+        .hero p { max-width:700px; margin:auto; color:#555; font-size:18px; margin-bottom:40px; }
+        .btn-group { display:flex; justify-content:center; gap:18px; }
+        .btn { padding:14px 28px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; border:none; }
+        .btn-primary { background:#F98D2E; color:#fff; }
+        .btn-primary:hover { background:#e47d24; }
+        .btn-outline { background:#fff; color:#0D2E5E; border:2px solid #0D2E5E; }
+        .btn-outline:hover { background:#0D2E5E; color:#fff; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="https://img.icons8.com/color/48/india.png" width="35">
+        Bharat e-Voting
+    </div>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="results.html">Results</a>
+        <a href="admin_login.html">Admin Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Secure Digital Voting for Every Citizen</h1>
+    <p>Participate in India's democratic process through our secure, transparent and accessible online voting platform. Your voice matters.</p>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" onclick="location.href='register.html'">Register to Vote</button>
+        <button class="btn btn-outline" onclick="location.href='results.html'">View Active Elections</button>
+    </div>
+</section>
+
+</body>
+</html>
