@@ -18,3 +18,4 @@
 ## Notes / Security
 - This is a demo. Passwords are stored plaintext for simplicity — **do not** use this in production.
 - No CSRF protection or production hardened auth. Use Spring Security and password hashing (BCrypt) for real systems.
+![WhatsApp Image 2026-01-15 at 6 27 26 PM](https://github.com/user-attachments/assets/a77ef09c-4183-4384-9927-6976425ce51a)
